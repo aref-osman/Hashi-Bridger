@@ -5,6 +5,12 @@ def initialise_game_data(var_rows, var_cols):
     return var_island_data
 
 
+# initialise bridge data
+def initialise_bridge_list(var_size):
+    var_list = [[0]]*var_size
+    return var_list
+
+
 # insert game data
 def insert_game_data(var_island_data):
     # change all non-zero island numbers
@@ -69,5 +75,11 @@ island_data = insert_game_data(initialise_game_data(rows, cols))
 
 # initialise live user data 2D array
 live_data = initialise_game_data(rows, cols)
+
+# initialise vertical bridges list
+vert_brdiges = initialise_bridge_list(cols)
+
+# initialise horizontal bridges list
+hor_bridges = initialise_bridge_list(rows)
 
 print("Game finished: {}".format(check_all_island_bridges_complete(island_data, live_data)))
