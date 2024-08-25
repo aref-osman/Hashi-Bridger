@@ -7,7 +7,7 @@ def initialise_game_data(var_rows, var_cols):
 
 # initialise bridge data
 def initialise_bridge_list(var_size):
-    var_list = [[0]]*var_size
+    var_list = [[]]*var_size
     return var_list
 
 
@@ -77,9 +77,11 @@ island_data = insert_game_data(initialise_game_data(rows, cols))
 live_data = initialise_game_data(rows, cols)
 
 # initialise vertical bridges list
-vert_brdiges = initialise_bridge_list(cols)
+vert_bridges = initialise_bridge_list(cols)
 
 # initialise horizontal bridges list
 hor_bridges = initialise_bridge_list(rows)
 
 print("Game finished: {}".format(check_all_island_bridges_complete(island_data, live_data)))
+print(vert_bridges)
+print(hor_bridges)
