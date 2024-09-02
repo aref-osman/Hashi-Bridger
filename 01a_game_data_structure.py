@@ -7,8 +7,10 @@ def initialise_game_data(var_rows, var_cols):
 
 # initialise bridge data
 def initialise_bridge_list(var_size):
-    var_list = [[]]*var_size
-    return var_list
+    var_dict = {}
+    for i in range(0, var_size):
+        var_dict[i] = []
+    return var_dict
 
 
 # insert game data
@@ -67,6 +69,12 @@ def check_all_island_bridges_complete(var_island_data, var_live_data):
     return True
 
 
+# build a bridge
+def build_a_bridge(var_dict, var_index_a, var_index_b_start, var_index_b_end):
+    var_dict[var_index_a].append([var_index_b_start, var_index_b_end])
+    return var_dict
+
+
 # set grid size
 rows, cols = (9, 6)
 
@@ -81,6 +89,10 @@ vert_bridges = initialise_bridge_list(cols)
 
 # initialise horizontal bridges list
 hor_bridges = initialise_bridge_list(rows)
+
+
+vert_bridges = build_a_bridge(vert_bridges, 1, 0, 2)
+vert_bridges = build_a_bridge(vert_bridges, 1, 3, 5)
 
 print("Game finished: {}".format(check_all_island_bridges_complete(island_data, live_data)))
 print(vert_bridges)
