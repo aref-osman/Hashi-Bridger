@@ -47,4 +47,13 @@ public class Island {
     public int getBridgeCount(int direction){
         return adjIslandWeightings.get(direction);
     }
+
+    // check if coordinate of adj island exists in specific direction (before retrieving, in case null)
+    public boolean checkAdjIslandExists(int direction) {
+        return (adjIslandCoordinates.get(direction) != null);
+    }
+    // get coordinate of adj island in specific direction
+    public IslandCoordinate getAdjIslandCoordinate(int direction){
+        return adjIslandCoordinates.get(direction);
+    }
 }
