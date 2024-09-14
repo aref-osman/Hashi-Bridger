@@ -1,8 +1,10 @@
 public class HashiBridger {
 
-    private static int[][] islandGrid = new int[4][4];
+    private static int[][] islandGrid = new int[6][9];
 
     public HashiBridger() {
+        
+
     }
 
     public void addIsland(int x, int y, int num){
