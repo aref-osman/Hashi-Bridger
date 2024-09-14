@@ -56,4 +56,9 @@ public class Island {
     public IslandCoordinate getAdjIslandCoordinate(int direction){
         return adjIslandCoordinates.get(direction);
     }
+
+    // add adjacent island's coordinates
+    public void addAdjIslandCoordinates(IslandCoordinate coordinate, int direction){
+        adjIslandCoordinates.set(direction, coordinate);
+    }
 }
