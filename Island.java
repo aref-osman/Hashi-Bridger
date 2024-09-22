@@ -10,9 +10,14 @@ public class Island {
     private ArrayList<Integer> adjIslandWeightings = new ArrayList<Integer>(4);
 
     // default constructor when creating an island; coordinate & number needed
-    public Island(int x, int y, int num) {
+    public Island(int x, int y, int num, ArrayList<IslandCoordinate> adjIslandCoordinates) {
         this.islandCoordinate = new IslandCoordinate(x, y);
         this.num = num;
+
+        // copy adj island coordinates from constructor input to field
+        for (int direction = 0; direction < 4; direction++) {
+            this.adjIslandCoordinates.add(adjIslandCoordinates.get(direction));
+        }
     }
 
     // get island co-ordinates
@@ -55,10 +60,5 @@ public class Island {
     // get coordinate of adj island in specific direction
     public IslandCoordinate getAdjIslandCoordinate(int direction){
         return adjIslandCoordinates.get(direction);
-    }
-
-    // add adjacent island's coordinates
-    public void addAdjIslandCoordinates(IslandCoordinate coordinate, int direction){
-        adjIslandCoordinates.set(direction, coordinate);
     }
 }
