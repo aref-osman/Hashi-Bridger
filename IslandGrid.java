@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class IslandGrid {
 
+    // minimum dimensions is 5 by 5
     private int WIDTH = 6;
     private int HEIGHT = 9;
     private int[][] intGrid = new int[HEIGHT][WIDTH];
@@ -14,8 +15,8 @@ public class IslandGrid {
     
     public IslandGrid(){
 
-        int x = 0;
-        int y = 0;
+        int r = 0;
+        int c = 0;
         int num = 0;
 
         // try importing all island data and create islands, adding them to the grid
@@ -27,14 +28,17 @@ public class IslandGrid {
                 String[] b = data.split(" ");
 
                 // basic island info (location & bridge number)
-                y = Integer.parseInt(b[0]);
-                x = Integer.parseInt(b[1]);
+                r = Integer.parseInt(b[0]); // row
+                c = Integer.parseInt(b[1]); // col
                 num = Integer.parseInt(b[2]);
 
-                intGrid[x][y] = num;
+                // set island number
+                intGrid[r][c] = num;
+                
 
             }
 
+            // print grid
             for (int i = 0; i < HEIGHT; i++) {
                 for (int j = 0; j < WIDTH; j++) {
                     int specialX = i;
@@ -44,17 +48,15 @@ public class IslandGrid {
                 System.out.println();
             }
 
+            // close the reader to prevent memory leak
             myReader.close();
 
             // initialise variable here to save memory (to avoid re-initialising every time variable is used)
             boolean found = false;
             
             // after all grid data is added, search for adjacencies and add Island data type to proper grid, for each island
-            for (int i = 0; i < HEIGHT; i++) {
-                for (int j = 0; j < WIDTH; j++) {
-                    x = i;
-                    y = j;
-                    // System.out.println("row: " + i + ", col: " + j);
+            for (int row = 0; row < HEIGHT; row++) { // cycle through each row
+                for (int col = 0; col < WIDTH; col++) { // cycle through each column
                     
                     // meta island info (adj island coordinates)
                     ArrayList<IslandCoordinate> adjIslandCoordinates = new ArrayList<IslandCoordinate>(4);
