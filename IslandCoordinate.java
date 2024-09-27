@@ -1,18 +1,18 @@
 public class IslandCoordinate {
 
-    private int x;
-    private int y;
+    private int r;
+    private int c;
 
-    public IslandCoordinate(int x, int y){
-        this.x = x;
-        this.y = y;
+    public IslandCoordinate(int r, int c){
+        this.r = r;
+        this.c = c;
     }
 
-    public int getXOrdinate(){
-        return x;
+    public int getRow(){
+        return r;
     }
 
-    public int getYOrdinate(){
-        return y;
+    public int getCol(){
+        return c;
     }
 }

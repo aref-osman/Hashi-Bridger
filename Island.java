@@ -21,11 +21,11 @@ public class Island {
     }
 
     // get island co-ordinates
-    public int getXOrdinate(){
-        return islandCoordinate.getXOrdinate();
+    public int getRow(){
+        return islandCoordinate.getRow();
     }
-    public int getYOrdinate(){
-        return islandCoordinate.getYOrdinate();
+    public int getCol(){
+        return islandCoordinate.getCol();
     }
 
 
