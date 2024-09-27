@@ -64,97 +64,107 @@ public class IslandGrid {
                     // IMPORTANT condition for meta data population: islands cannot be directly above/below or directly to the right/left of another island
                     // or to rephrase: minimum gridspace between two islands is 2
 
-                    // NORTH 0:
-                    // check north (only if island is not already in top two rows)
-                    if (row >= 2) {
-                        found = false;
-                        // go through all grid spots above island, starting from the island, then upwards
-                        for (int northernIsland = row - 2; northernIsland >= 0; northernIsland--) {
-                            if (intGrid[northernIsland][col] != 0 && !found) {
-                                found = true;
-                                IslandCoordinate adjIslandCoordinate = new IslandCoordinate(northernIsland, col);
-                                adjIslandCoordinates.add(adjIslandCoordinate);
+                    int varNum = intGrid[row][col];
+
+                    if (varNum != 0) {
+                        // NORTH 0:
+                        // check north (only if island is not already in top two rows)
+                        if (row >= 2) {
+                            found = false;
+                            // go through all grid spots above island, starting from the island, then upwards
+                            for (int northernIsland = row - 2; northernIsland >= 0; northernIsland--) {
+                                if (intGrid[northernIsland][col] != 0 && !found) {
+                                    found = true;
+                                    IslandCoordinate adjIslandCoordinate = new IslandCoordinate(northernIsland, col);
+                                    adjIslandCoordinates.add(adjIslandCoordinate);
+                                }
                             }
-                        }
-                        if (!found) {
+                            if (!found) {
+                                IslandCoordinate blankIslandCoordinate = new IslandCoordinate(-1, -1);
+                                adjIslandCoordinates.add(blankIslandCoordinate);
+                            }
+                        } else {
                             IslandCoordinate blankIslandCoordinate = new IslandCoordinate(-1, -1);
                             adjIslandCoordinates.add(blankIslandCoordinate);
                         }
+
+                        // EAST 1:
+                        // check east (only if island is not already in rightmost two columns)
+                        if (col <= (WIDTH - 2)) {
+                            found = false;
+                            // go through all grid spots east of the island, starting from the island, then east
+                            for (int easternIsland = col + 2; easternIsland < WIDTH; easternIsland++) {
+                                if (intGrid[row][easternIsland] != 0 && !found) {
+                                    found = true;
+                                    IslandCoordinate adjIslandCoordinate = new IslandCoordinate(row, easternIsland);
+                                    adjIslandCoordinates.add(adjIslandCoordinate);
+                                }
+                            }
+                            if (!found) {
+                                IslandCoordinate blankIslandCoordinate = new IslandCoordinate(-1, -1);
+                                adjIslandCoordinates.add(blankIslandCoordinate);
+                            }
+                        } else {
+                            IslandCoordinate blankIslandCoordinate = new IslandCoordinate(-1, -1);
+                            adjIslandCoordinates.add(blankIslandCoordinate);
+                        }
+
+                        // SOUTH 2:
+                        // check south (only if island is not already in bottom two rows)
+                        if (row <= (HEIGHT - 2)) {
+                            found = false;
+                            // go through all grid spots south of the island, starting from the island, then south
+                            for (int southernIsland = row + 2; southernIsland < HEIGHT; southernIsland++) {
+                                if (intGrid[southernIsland][col] != 0 && !found) {
+                                    found = true;
+                                    IslandCoordinate adjIslandCoordinate = new IslandCoordinate(southernIsland, col);
+                                    adjIslandCoordinates.add(adjIslandCoordinate);
+                                }
+                            }
+                            if (!found) {
+                                IslandCoordinate blankIslandCoordinate = new IslandCoordinate(-1, -1);
+                                adjIslandCoordinates.add(blankIslandCoordinate);
+                            }
+                        } else {
+                            IslandCoordinate blankIslandCoordinate = new IslandCoordinate(-1, -1);
+                            adjIslandCoordinates.add(blankIslandCoordinate);
+                        }
+
+                        // WEST 3:
+                        // check west (only is island is not already in leftmost two columns)
+                        if (col >= 2) {
+                            found = false;
+                            // go through all grid spots west of the island, starting from the island, then west
+                            for (int westernIsland = col - 2; westernIsland >= 0; westernIsland--) {
+                                if (intGrid[row][westernIsland] != 0) {
+                                    found = true;
+                                    IslandCoordinate adjIslandCoordinate = new IslandCoordinate(row, westernIsland);
+                                    adjIslandCoordinates.add(adjIslandCoordinate);
+                                }
+                            }
+                            if (!found) {
+                                IslandCoordinate blankIslandCoordinate = new IslandCoordinate(-1, -1);
+                                adjIslandCoordinates.add(blankIslandCoordinate);
+                            }
+                        } else {
+                            IslandCoordinate blankIslandCoordinate = new IslandCoordinate(-1, -1);
+                            adjIslandCoordinates.add(blankIslandCoordinate);
+                        }                        
                     } else {
                         IslandCoordinate blankIslandCoordinate = new IslandCoordinate(-1, -1);
                         adjIslandCoordinates.add(blankIslandCoordinate);
-                    }
-                    
-                    // EAST 1:
-                    // check east (only if island is not already in rightmost two columns)
-                    if (col <= (WIDTH - 2)) {
-                        found = false;
-                        // go through all grid spots east of the island, starting from the island, then east
-                        for (int easternIsland = col + 2; easternIsland < WIDTH; easternIsland++) {
-                            if (intGrid[row][easternIsland] != 0 && !found) {
-                                found = true;
-                                IslandCoordinate adjIslandCoordinate = new IslandCoordinate(row, easternIsland);
-                                adjIslandCoordinates.add(adjIslandCoordinate);
-                            }
-                        }
-                        if (!found) {
-                            IslandCoordinate blankIslandCoordinate = new IslandCoordinate(-1, -1);
-                            adjIslandCoordinates.add(blankIslandCoordinate);
-                        }
-                    } else {
-                        IslandCoordinate blankIslandCoordinate = new IslandCoordinate(-1, -1);
+                        adjIslandCoordinates.add(blankIslandCoordinate);
+                        adjIslandCoordinates.add(blankIslandCoordinate);
                         adjIslandCoordinates.add(blankIslandCoordinate);
                     }
 
-                    // SOUTH 2:
-                    // check south (only if island is not already in bottom two rows)
-                    if (row <= (HEIGHT - 2)) {
-                        found = false;
-                        // go through all grid spots south of the island, starting from the island, then south
-                        for (int southernIsland = row + 2; southernIsland < HEIGHT; southernIsland++) {
-                            if (intGrid[southernIsland][col] != 0 && !found) {
-                                found = true;
-                                IslandCoordinate adjIslandCoordinate = new IslandCoordinate(southernIsland, col);
-                                adjIslandCoordinates.add(adjIslandCoordinate);
-                            }
-                        }
-                        if (!found) {
-                            IslandCoordinate blankIslandCoordinate = new IslandCoordinate(-1, -1);
-                            adjIslandCoordinates.add(blankIslandCoordinate);
-                        }
-                    } else {
-                        IslandCoordinate blankIslandCoordinate = new IslandCoordinate(-1, -1);
-                        adjIslandCoordinates.add(blankIslandCoordinate);
-                    }
-
-                    // WEST 3:
-                    // check west (only is island is not already in leftmost two columns)
-                    if (col >= 2) {
-                        found = false;
-                        // go through all grid spots west of the island, starting from the island, then west
-                        for (int westernIsland = col - 2; westernIsland >= 0; westernIsland--) {
-                            if (intGrid[row][westernIsland] != 0) {
-                                found = true;
-                                IslandCoordinate adjIslandCoordinate = new IslandCoordinate(row, westernIsland);
-                                adjIslandCoordinates.add(adjIslandCoordinate);
-                            }
-                        }
-                        if (!found) {
-                            IslandCoordinate blankIslandCoordinate = new IslandCoordinate(-1, -1);
-                            adjIslandCoordinates.add(blankIslandCoordinate);
-                        }
-                    } else {
-                        IslandCoordinate blankIslandCoordinate = new IslandCoordinate(-1, -1);
-                        adjIslandCoordinates.add(blankIslandCoordinate);
-                    }
-
-                    // all adjacencies found by here
                     // Island newIsland = new Island(row, col, num, adjIslandCoordinates);
                     for (int k = 0; k < 4; k++) {
                         IslandCoordinate a = adjIslandCoordinates.get(k);
                         System.out.println("Row:" + Integer.toString(a.getRow()));
                         System.out.println("Col:" + Integer.toString(a.getCol()));
                     }
+                    System.out.println("-------------------------");
                     // grid[row][col] = newIsland;
 
                     // STOPPED CODING HERE
