@@ -101,7 +101,7 @@ public class IslandGrid {
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 if (grid[i][j] != null) {
-                    System.out.print(grid[i][j].getTotalBridgeCount() + " ");    
+                    System.out.print(grid[i][j].getTargetBridgeCount() + " ");    
                 } else {
                     // empty grid spots (no islands) marked with -1
                     System.out.print("-1 ");

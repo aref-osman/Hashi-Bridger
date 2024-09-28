@@ -2,15 +2,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
+
 public class Island {
 
-    // minimum dimensions is 5 by 5
     private int WIDTH = 6;
     private int HEIGHT = 9;
 
+    // island-specific details
     private IslandCoordinate islandCoordinate;
     private int num;
-    // N --> 0 and W --> 3, clockwise 0-3 (position in outer ArrayList)
+
+    
     // weighting: 1-> single and 2-> double (value in inner ArrayList)
     private ArrayList<IslandCoordinate> adjIslandCoordinates = new ArrayList<IslandCoordinate>(4);
     private ArrayList<Integer> adjIslandWeightings = new ArrayList<Integer>(4);
@@ -115,7 +118,7 @@ public class Island {
     }
 
     // get total number of bridges that need to be built from this island
-    public int getTotalBridgeCount(){
+    public int getTargetBridgeCount(){
         return num;
     }
     
@@ -134,7 +137,7 @@ public class Island {
     }
 
     // get number of bridges built in specific direction
-    public int getBridgeCount(int direction){
+    public int getBridgesBuiltInDirection(int direction){
         return adjIslandWeightings.get(direction);
     }
 
