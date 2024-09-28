@@ -1,6 +1,12 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Island {
+
+    // minimum dimensions is 5 by 5
+    private int WIDTH = 6;
+    private int HEIGHT = 9;
 
     private IslandCoordinate islandCoordinate;
     private int num;
@@ -10,14 +16,88 @@ public class Island {
     private ArrayList<Integer> adjIslandWeightings = new ArrayList<Integer>(4);
 
     // default constructor when creating an island; coordinate & number needed
-    public Island(int x, int y, int num, ArrayList<IslandCoordinate> adjIslandCoordinates) {
-        this.islandCoordinate = new IslandCoordinate(x, y);
+    public Island(int r, int c, int num, int[][] intGrid) {
+        
+        this.islandCoordinate = new IslandCoordinate(r, c);
         this.num = num;
 
-        // copy adj island coordinates from constructor input to field
-        for (int direction = 0; direction < 4; direction++) {
-            this.adjIslandCoordinates.add(adjIslandCoordinates.get(direction));
+        // get the column and row data points of the island
+        int rCount = 0;
+        int cCount = 0;
+        int[] rowData = new int[WIDTH];
+        int[] colData = new int[HEIGHT];
+        
+        for (int row = 0; row < intGrid.length; row++) {
+            for (int col = 0; col < intGrid[0].length; col++) {
+                // row of data
+                if (r == row) {
+                    rowData[rCount] = intGrid[row][col];
+                    rCount++;
+                }
+                // column of data
+                if (c == col) {
+                    colData[cCount] = intGrid[row][col];
+                    cCount++;
+                }   
+            }
         }
+
+        // find adjacencies
+        int thisIslandNum; // temp variable
+
+        // north
+        int northernAdjacencyRow = -1;
+        int northernAdjacencyCol = -1;
+        for (int n = 0; n <= r - 2; n++) { // start 2 rows above and keep going up
+            thisIslandNum = intGrid[n][c];
+            if (thisIslandNum != 0) {
+                northernAdjacencyRow = n;
+                northernAdjacencyCol = c;
+            }
+        }
+
+        // east
+        int easternAdjacencyRow = -1;
+        int easternAdjacencyCol = -1;
+        for (int e = WIDTH - 1; e >= c + 2; e--) {
+            thisIslandNum = intGrid[r][e];
+            if (thisIslandNum != 0) {
+                easternAdjacencyCol = e;
+                easternAdjacencyRow = r;
+            }
+        }
+
+        // south
+        int southernAdjacencyRow = -1;
+        int southernAdjacencyCol = -1;
+        for (int s = HEIGHT - 1; s >=  r + 2; s--) {
+            thisIslandNum = intGrid[s][c];
+            if (thisIslandNum != 0) {
+                southernAdjacencyRow = s;
+                southernAdjacencyCol = c;
+            }
+        }
+
+        // west
+        int westernAdjacencyRow = -1;
+        int westernAdjacencyCol = -1;
+        for (int w = 0; w <= c - 2; w++) {
+            thisIslandNum = intGrid[r][w];
+            if (thisIslandNum != 0) {
+                westernAdjacencyCol = w;
+                westernAdjacencyRow = r;
+            }
+            
+        }
+
+        IslandCoordinate northCoordinate = new IslandCoordinate(northernAdjacencyRow, northernAdjacencyCol);
+        IslandCoordinate eastCoordinate = new IslandCoordinate(easternAdjacencyRow, easternAdjacencyCol);
+        IslandCoordinate southCoordinate = new IslandCoordinate(southernAdjacencyRow, southernAdjacencyCol);
+        IslandCoordinate westCoordinate = new IslandCoordinate(westernAdjacencyRow, westernAdjacencyCol);
+        
+        List<IslandCoordinate> l = Arrays.asList(northCoordinate, eastCoordinate, southCoordinate, westCoordinate);
+        adjIslandCoordinates.addAll(l);
+        
     }
 
     // get island co-ordinates
@@ -27,7 +107,6 @@ public class Island {
     public int getCol(){
         return islandCoordinate.getCol();
     }
-
 
     // get total number of bridges that need to be built from this island
     public int getTotalBridgeCount(){
@@ -55,10 +134,13 @@ public class Island {
 
     // check if coordinate of adj island exists in specific direction (before retrieving, in case null)
     public boolean checkAdjIslandExists(int direction) {
-        return (adjIslandCoordinates.get(direction) != null);
+        // invalid or non-existing co-ordinates have co-ordinates (-1, -1), as all row and col values are >= 0
+        return (adjIslandCoordinates.get(direction).getRow() != -1);
     }
     // get coordinate of adj island in specific direction
     public IslandCoordinate getAdjIslandCoordinate(int direction){
         return adjIslandCoordinates.get(direction);
     }
+
+    // build a bridge
 }
