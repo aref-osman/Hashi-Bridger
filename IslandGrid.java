@@ -7,11 +7,16 @@ import java.util.Scanner;
 
 public class IslandGrid {
 
+    // grid dimensions
     // minimum dimensions is 5 by 5
     private int WIDTH = 6;
     private int HEIGHT = 9;
+
+    // number/Island-type grids
     private int[][] intGrid = new int[HEIGHT][WIDTH];
     private Island[][] grid = new Island[HEIGHT][WIDTH];
+
+    // ArrayLists storing the grid info, each by a specific info type (row, col, num etc...)
     private int ISLAND_COUNT = 0;
     private ArrayList<Integer> rows = new ArrayList<Integer>();
     private ArrayList<Integer> cols = new ArrayList<Integer>();
@@ -19,6 +24,7 @@ public class IslandGrid {
     private ArrayList<Integer> islandsPerRow = new ArrayList<Integer>(WIDTH);
     private ArrayList<Integer> islandsPerCol = new ArrayList<Integer>(HEIGHT);
     
+    // constructor
     public IslandGrid(){
         // initialise islandsPerRow and islandsPerCol to contain the intended number of elements
         for (int i = 0; i < HEIGHT; i++) {
@@ -34,8 +40,10 @@ public class IslandGrid {
 
         // try importing all island data and create islands, adding them to a temporary int grid
         try {
+            // import file and open scanner
             File myObj = new File("islandData.txt");
             Scanner myReader = new Scanner(myObj);
+            // iterate through each line in text file
             while (myReader.hasNextLine()) {
                 // extract island info (location & bridge number)
                 String data = myReader.nextLine();
@@ -61,8 +69,7 @@ public class IslandGrid {
             myReader.close();
             // populate Island-type grid with Island objects
             for (int i = 0; i < ISLAND_COUNT; i++) {
-                Island newIsland = new Island(rows.get(i), cols.get(i), nums.get(i), intGrid);
-                grid[rows.get(i)][cols.get(i)] = newIsland;
+                grid[rows.get(i)][cols.get(i)] = new Island(rows.get(i), cols.get(i), nums.get(i), intGrid);
             }
 
         } catch (FileNotFoundException e) {
@@ -87,12 +94,16 @@ public class IslandGrid {
         return islandsPerCol.get(c);
     }
 
+    // get corner island co-ordinates
+
+    // print grid
     public void printGrid(){
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 if (grid[i][j] != null) {
                     System.out.print(grid[i][j].getTotalBridgeCount() + " ");    
                 } else {
+                    // empty grid spots (no islands) marked with -1
                     System.out.print("-1 ");
                 }
             }
@@ -100,36 +111,13 @@ public class IslandGrid {
         }
     }
 
-    // public void populateIslandsWithAdjacentCoordinates() {
-    //     // IMPORTANT condition: islands cannot be directly above/below or directly to the right/left of another island
-    //     // or to rephrase: minimum gridspace between two islands is 2
-    //     int x;
-    //     int y;
-    //     for (int i = 0; i < HEIGHT; i++) {
-    //         for (int j = 0; j < WIDTH; j++) {
-    //             // check if island is null before trying to find its adjacencies    
-    //             if (grid[i][j] != null) {
+    // build a bridge between two islands?
+    // build a bridge from an island to its adjacent island in a direction?
 
-    //                 Island thisIsland = grid[i][j];
-    //                 x = thisIsland.getXOrdinate();
-    //                 y = thisIsland.getYOrdinate();
+    // build independently buildable bridges (can be built as the first bridge)
+    // consult planning doc
 
-    //                 // check north (only if island is not already in top row)
-    //                 if (y != 0 || y != 1) {
-    //                     // go through all grid spots above island, starting from the island, then upwards
-    //                     for (int northernIsland = y - 1; northernIsland >= 0; northernIsland--) {
-    //                         if (grid[northernIsland][x] != null) {
-    //                             IslandCoordinate adjIslandCoordinate = new IslandCoordinate(x, northernIsland);
-    //                             thisIsland.addAdjIslandCoordinates(adjIslandCoordinate, 0);
-    //                             // once an adjacent island is found 
-    //                         }
-    
-    //                     }
-    //                 }
-    //             } 
-    //         }
-    //     }
-    // }
-        
+    // check if path for bridge is possible (empty)
+
 }
 
