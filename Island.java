@@ -95,8 +95,14 @@ public class Island {
         IslandCoordinate southCoordinate = new IslandCoordinate(southernAdjacencyRow, southernAdjacencyCol);
         IslandCoordinate westCoordinate = new IslandCoordinate(westernAdjacencyRow, westernAdjacencyCol);
         
+        // finish initialisation of adjacent islands (add them all to ArrayList)
         List<IslandCoordinate> l = Arrays.asList(northCoordinate, eastCoordinate, southCoordinate, westCoordinate);
         adjIslandCoordinates.addAll(l);
+
+        // initialise bridge weightings with no bridges in all directions
+        for (int i = 0; i < 4; i++) {
+            adjIslandWeightings.add(0);
+        }
         
     }
 
