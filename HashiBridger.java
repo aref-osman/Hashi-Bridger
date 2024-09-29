@@ -6,7 +6,6 @@ public class HashiBridger {
 
         IslandGrid islandGrid = new IslandGrid();
         islandGrid.printGrid();
-        //islandGrid.populateIslandsWithAdjacentCoordinates();
     }
     
 }
