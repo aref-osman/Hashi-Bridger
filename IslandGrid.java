@@ -23,6 +23,9 @@ public class IslandGrid {
     private ArrayList<Integer> nums = new ArrayList<Integer>();
     private ArrayList<Integer> islandsPerRow = new ArrayList<Integer>(WIDTH);
     private ArrayList<Integer> islandsPerCol = new ArrayList<Integer>(HEIGHT);
+
+    // store corner islands
+    private ArrayList<Island> cornerIslands = new ArrayList<Island>();
     
     // constructor
     public IslandGrid(){
@@ -77,6 +80,21 @@ public class IslandGrid {
         }
     }
 
+    // get corner island co-ordinates (function only called inside constructor)
+    private void getCornerIslands(){
+        ArrayList<IslandCoordinate> cornerIslandCoordinates = new ArrayList<IslandCoordinate>();
+
+        // top left 1 (topmost in left column)
+        // top left 2 (leftmost in top row)
+        // top right 1 (rightmost in top row)
+        // top right 2 (topmost in right column)
+        // bottom right 1 (bottommost in right column)
+        // bottom right 2 (rightmost in bottom row)
+        // bottom left 1 (leftmost in bottom row)
+        // bottom left 2 (bottommost in left column)
+
+    }
+
     // get island by position (row & col)
     public Island getIsland(int r, int c) {
         return grid[r][c];
@@ -93,8 +111,6 @@ public class IslandGrid {
     public int getNumIslandsInCol(int c){
         return islandsPerCol.get(c);
     }
-
-    // get corner island co-ordinates
 
     // print grid
     public void printGrid(){
