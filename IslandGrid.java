@@ -83,8 +83,22 @@ public class IslandGrid {
     // get corner island co-ordinates (function only called inside constructor)
     private void getCornerIslands(){
         ArrayList<IslandCoordinate> cornerIslandCoordinates = new ArrayList<IslandCoordinate>();
+        int targetRow;
+        int targetCol;
 
         // top left 1 (topmost in left column)
+        // first, find smallest col number, and amongst all the islands that share that
+        //  number, find the island that has the smallest row number
+        targetCol = cols.get(0);
+        targetRow = cols.get(0);
+        for (int l = 0; l < ISLAND_COUNT; l++) {
+            // if a lowest col number is found
+            if (cols.get(l) < targetCol || (cols.get(l) == targetCol && rows.get(l) < targetRow)) {
+                targetCol = cols.get(l);
+                targetRow = rows.get(l);
+            }
+        }
+
         // top left 2 (leftmost in top row)
         // top right 1 (rightmost in top row)
         // top right 2 (topmost in right column)
