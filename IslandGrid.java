@@ -78,34 +78,168 @@ public class IslandGrid {
         } catch (FileNotFoundException e) {
             System.out.println("Oops! No file found!");
         }
+
+        // find and store all corner islands
+        getCornerIslands();
     }
 
     // get corner island co-ordinates (function only called inside constructor)
-    private void getCornerIslands(){
+    private void getCornerIslands() {
         ArrayList<IslandCoordinate> cornerIslandCoordinates = new ArrayList<IslandCoordinate>();
-        int targetRow;
-        int targetCol;
+        int targetRow = -1;
+        int targetCol = -1;
 
-        // top left 1 (topmost in left column)
-        // first, find smallest col number, and amongst all the islands that share that
-        //  number, find the island that has the smallest row number
-        targetCol = cols.get(0);
-        targetRow = cols.get(0);
-        for (int l = 0; l < ISLAND_COUNT; l++) {
-            // if a lowest col number is found
-            if (cols.get(l) < targetCol || (cols.get(l) == targetCol && rows.get(l) < targetRow)) {
-                targetCol = cols.get(l);
-                targetRow = rows.get(l);
+        // 1: top left 1 (topmost in left column)
+        // cycle through grid top down then right and stop at the first value
+        for (int col = 0; col < WIDTH; col++) {
+            for (int row = 0; row < HEIGHT; row++) {
+                Island thisIsland = grid[row][col];
+                if (thisIsland != null) {
+                    // if island found, this is the first island
+                    targetRow = thisIsland.getRow();
+                    targetCol = thisIsland.getCol();
+                    // add this island to the list of corner islands
+                    cornerIslandCoordinates.add(new IslandCoordinate(targetRow, targetCol));
+                    // break loop after the first island is found
+                    break;
+                }
             }
         }
 
-        // top left 2 (leftmost in top row)
-        // top right 1 (rightmost in top row)
-        // top right 2 (topmost in right column)
-        // bottom right 1 (bottommost in right column)
-        // bottom right 2 (rightmost in bottom row)
-        // bottom left 1 (leftmost in bottom row)
-        // bottom left 2 (bottommost in left column)
+        
+
+        // 2: top left 2 (leftmost in top row)
+        // cycle through grid from left to right then down and stop at the first value
+        for (int row = 0; row < HEIGHT; row++) {
+            for (int col = 0; col < WIDTH; col++) {
+                Island thisIsland = grid[row][col];
+                if (thisIsland != null) {
+                    // if island found, this is the first island
+                    targetRow = thisIsland.getRow();
+                    targetCol = thisIsland.getCol();
+                    // check if this island is also the topmost in the left column. if not, then add it
+                    if (!thisIsland.getCoordinates().equals(cornerIslandCoordinates.get(cornerIslandCoordinates.size()-1))) {
+                        // add this island to the list of corner islands
+                        cornerIslandCoordinates.add(new IslandCoordinate(targetRow, targetCol));
+                    }
+                    // break loop after the first island is found
+                    break;
+                }
+            }
+        }
+
+        // 3: top right 1 (rightmost in top row)
+        // cycle through grid right to left then down and stop at the first value
+        for (int row = 0; row < HEIGHT; row++) {
+            for (int col = WIDTH - 1; col >= 0; col--) {
+                Island thisIsland = grid[row][col];
+                if (thisIsland != null) {
+                    // if island found, this is the first island
+                    targetRow = thisIsland.getRow();
+                    targetCol = thisIsland.getCol();
+                    // add this island to the list of corner islands
+                    cornerIslandCoordinates.add(new IslandCoordinate(targetRow, targetCol));
+                    // break loop after the first island is found
+                    break;
+                }
+            }
+        }
+
+        // 4: top right 2 (topmost in right column)
+        // cycle through grid top down then left and stop at the first value
+        for (int col = WIDTH - 1; col >= 0; col--) {
+            for (int row = 0; row < HEIGHT; row++) {
+                Island thisIsland = grid[row][col];
+                if (thisIsland != null) {
+                    // if island found, this is the first island
+                    targetRow = thisIsland.getRow();
+                    targetCol = thisIsland.getCol();
+                    if (!thisIsland.getCoordinates().equals(cornerIslandCoordinates.get(cornerIslandCoordinates.size()-1))) {
+                        // add this island to the list of corner islands
+                        cornerIslandCoordinates.add(new IslandCoordinate(targetRow, targetCol));
+                    }
+                    // break loop after the first island is found
+                    break;
+                }
+            }
+        }
+
+        // 5: bottom right 1 (bottommost in right column)
+        // cycle through grid down up then left and stop at the first value
+        for (int col = WIDTH - 1; col >= 0; col--) {
+            for (int row = HEIGHT - 1; row >= 0; row--) {
+                Island thisIsland = grid[row][col];
+                if (thisIsland != null) {
+                    // if island found, this is the first island
+                    targetRow = thisIsland.getRow();
+                    targetCol = thisIsland.getCol();
+                    // add this island to the list of corner islands
+                    cornerIslandCoordinates.add(new IslandCoordinate(targetRow, targetCol));
+                    // break loop after the first island is found
+                    break;
+                }
+            }
+        }
+        
+        // 6: bottom right 2 (rightmost in bottom row)
+        // cycle through grid right to left then up and stop at the first value
+        for (int row = HEIGHT - 1; row >= 0; row--) {
+            for (int col = WIDTH - 1; col >= 0; col--) {
+                Island thisIsland = grid[row][col];
+                if (thisIsland != null) {
+                    // if island found, this is the first island
+                    targetRow = thisIsland.getRow();
+                    targetCol = thisIsland.getCol();
+                    if (!thisIsland.getCoordinates().equals(cornerIslandCoordinates.get(cornerIslandCoordinates.size()-1))) {
+                        // add this island to the list of corner islands
+                        cornerIslandCoordinates.add(new IslandCoordinate(targetRow, targetCol));
+                    }
+                    // break loop after the first island is found
+                    break;
+                }
+            }
+        }
+
+        // 7: bottom left 1 (leftmost in bottom row)
+        // cycle through grid left to right then up and stop at the first value
+        for (int row = HEIGHT - 1; row >= 0; row--) {
+            for (int col = 0; col < WIDTH; col++) {
+                Island thisIsland = grid[row][col];
+                if (thisIsland != null) {
+                    // if island found, this is the first island
+                    targetRow = thisIsland.getRow();
+                    targetCol = thisIsland.getCol();
+                    // add this island to the list of corner islands
+                    cornerIslandCoordinates.add(new IslandCoordinate(targetRow, targetCol));
+                    // break loop after the first island is found
+                    break;
+                }
+            }
+        }
+
+        // 8: bottom left 2 (bottommost in left column)
+        // cycle through grid down up then right and stop at the first value
+        for (int col = 0; col < WIDTH; col++) {
+            for (int row = HEIGHT - 1; row >= 0; row--) {
+                Island thisIsland = grid[row][col];
+                if (thisIsland != null) {
+                    // if island found, this is the first island
+                    targetRow = thisIsland.getRow();
+                    targetCol = thisIsland.getCol();
+                    if (!thisIsland.getCoordinates().equals(cornerIslandCoordinates.get(cornerIslandCoordinates.size()-1))) {
+                        // add this island to the list of corner islands
+                        cornerIslandCoordinates.add(new IslandCoordinate(targetRow, targetCol));
+                    }
+                    // break loop after the first island is found
+                    break;
+                }
+            }
+        }
+
+        // add all island types to arraylist of islands
+        for (IslandCoordinate i : cornerIslandCoordinates) {
+            cornerIslands.add(grid[i.getRow()][i.getCol()]);
+        }
 
     }
 
