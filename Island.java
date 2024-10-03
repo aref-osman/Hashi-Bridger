@@ -116,6 +116,9 @@ public class Island {
     public int getCol(){
         return islandCoordinate.getCol();
     }
+    public IslandCoordinate getCoordinates(){
+        return islandCoordinate;
+    }
 
     // get total number of bridges that need to be built from this island
     public int getTargetBridgeCount(){
