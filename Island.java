@@ -153,6 +153,20 @@ public class Island {
     public IslandCoordinate getAdjIslandCoordinate(int direction){
         return adjIslandCoordinates.get(direction);
     }
+    // get number of adjacent islands
+    public int getNumberofAdjIslands(){
+        int adjIslandCount = 0;
+        for (int d = 0; d < 4; d++) {
+            if (checkAdjIslandExists(d)) {
+                adjIslandCount++;
+            }
+        }
+        return adjIslandCount;
+    }
 
-    // build a bridge
+    // build a (half) bridge from an island
+    // other half (connection to the other island is to be built separately)
+    public void buildBridge(int direction, int weight){
+        adjIslandWeightings.set(direction, weight);
+    }
 }
