@@ -147,7 +147,7 @@ public class IslandGrid {
 
     // build a bridge between two islands?
     // step 0: this method should only execute after checking that the bridge is
-    // actually possible to build. Otherwise, throw an exception (in the checking method, not this one)
+    // actually possible to build. Otherwise, throw an exception or return false (in the checking method, not this one) 
     // step 1: change both islands' info
     // step 2: change the appropriate bridge arraylist
     public void buildBridge(int positionOne, int positionTwo, int orientation, int weight){
@@ -155,16 +155,40 @@ public class IslandGrid {
         int directionTwo = -1;
         // vertical
         if (orientation == 0){
-            // island one comes first --> island one is top island
+
+            // col is the same for both islands
+            int thisCol = cols.get(positionOne);
+            // rows are different (initialise here, set later)
+            int firstRow = -1;
+            int lastRow = -1;
+
+            // island one is the bottom island
             if (positionOne > positionTwo) {
-                directionOne = 2; // south
-                directionTwo = 0; // north
-            }
-            // island two comes first --> island two is top island 
-            else {
-                directionOne = 0; // north
+                // starting row
                 directionTwo = 2; // south
+                firstRow = rows.get(positionTwo);
+
+                // ending row
+                directionOne = 0; // north
+                lastRow = rows.get(positionOne);
             }
+            // island one is the top island
+            else {
+                // starting row
+                directionOne = 2; // south
+                firstRow = rows.get(directionOne);
+
+                // ending row
+                directionTwo = 0; // north
+                lastRow = rows.get(directionTwo);
+            }
+
+            Integer[] bothRows = new Integer[]{firstRow, lastRow};
+
+            // update bridge list
+            verticalBridges.get(thisCol).addAll(Arrays.asList(bothRows));
+            Collections.sort(verticalBridges.get(thisCol));
+            // THIS SHOULD BE THE END OF VERTICAL BRIDGE BUILDING (check this)
         }
         // horizontal
         else {
@@ -175,7 +199,7 @@ public class IslandGrid {
             int firstCol = -1;
             int lastCol = -1;
 
-            // island two is the left island
+            // island one is the right island
             if (positionOne > positionTwo) {
                 // starting col
                 directionTwo = 1; // east
