@@ -243,6 +243,8 @@ public class IslandGrid {
     // consult planning doc
 
     // check if path for bridge is possible (empty)
+    // assumptions: the two islands are adjacent
+    // 1) inputs: 
 
 }
 

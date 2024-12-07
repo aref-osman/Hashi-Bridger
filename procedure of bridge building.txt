@@ -1,0 +1,11 @@
+cycle through all islands, going across then down, and repeat until no changes observed:
+
+step 1: get island number
+step 2: apply island-number-specific methods to build all possible bridges from it
+__________________________________________
+island-specific-methods:
+- 
+- 
+- 
+- 
+- 
