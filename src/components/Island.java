@@ -23,7 +23,6 @@ public class Island {
         ADJACENT_ISLAND_COORDINATES = adjacencyCoordinates;
     }
 
-    // fixed info about island
     public int getXOrdinate() {return X_ORDINATE;}
     public int getYOrdinate() {return Y_ORDINATE;}
     public int getTargetBridgeCount() {return TARGET_BRIDGE_COUNT;}
@@ -40,15 +39,10 @@ public class Island {
         return numAdjacentIslands;
     }
 
-    // variable info about island
-    // total built bridges
-    public int getCountOfBridgesBuiltFromIsland() {int sum = 0; for (int n : builtBridges) {sum += n;} return sum;}
-    // built bridges in a specific direction, from the island
-    public int getCountOfBridgesBuiltFromIsland(CardinalDirection cardinalDirection) {return builtBridges.get(cardinalDirection.equivalentValue());}
-    // total bridges that remain to be built
-    public int getCountOfBridgesLeftToBuild() {return TARGET_BRIDGE_COUNT - getCountOfBridgesBuiltFromIsland();}
-    // whether the island has all its bridges built
-    public boolean isComplete() {return getCountOfBridgesLeftToBuild() == 0;}
+    public int getCountOfBridgesBuiltFromIsland() {return getSumOfItemsInIntegerArrayList(builtBridges);} // total built bridges
+    public int getCountOfBridgesBuiltFromIsland(CardinalDirection cardinalDirection) {return builtBridges.get(cardinalDirection.value());} // built bridges in a specific direction, from the island
+    public int getCountOfBridgesLeftToBuild() {return TARGET_BRIDGE_COUNT - getCountOfBridgesBuiltFromIsland();} // total bridges that remain to be built
+    public boolean isComplete() {return getCountOfBridgesLeftToBuild() == 0;} // whether the island has all its bridges built
     public boolean isDirectionBlockedByIntersectingBridge(CardinalDirection cardinalDirection) 
     {return directionBlockedForBridgeBuilding.get(cardinalDirection.equivalentValue());}
     // the following methods do not check if a bridge be built *to* destination island, only *from* this island
