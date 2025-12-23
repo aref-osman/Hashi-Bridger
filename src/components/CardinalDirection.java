@@ -13,7 +13,7 @@ public enum CardinalDirection {
         this.value = value;
     }
 
-    public int equivalentValue() {
+    public int value() {
         return value;
     }
 }

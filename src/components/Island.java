@@ -30,9 +30,9 @@ public class Island {
     public ArrayList<ArrayList<Integer>> getAllAdjacentIslandCoordinates() 
     {return ADJACENT_ISLAND_COORDINATES;}
     public ArrayList<Integer> getAdjacentIslandCoordinates(CardinalDirection cardinalDirection) 
-    {return ADJACENT_ISLAND_COORDINATES.get(cardinalDirection.equivalentValue());}
+    {return ADJACENT_ISLAND_COORDINATES.get(cardinalDirection.value());}
     public boolean isThereAnAdjacentIslandInThisDirection(CardinalDirection cardinalDirection) 
-    {return !ADJACENT_ISLAND_COORDINATES.get(cardinalDirection.equivalentValue()).isEmpty();}
+    {return !ADJACENT_ISLAND_COORDINATES.get(cardinalDirection.value()).isEmpty();}
     public int getNumberOfAdjacentIslands() { 
         int numAdjacentIslands = 0;
         for (ArrayList<Integer> adjacentIslandCoordinates : ADJACENT_ISLAND_COORDINATES) 
