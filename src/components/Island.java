@@ -45,7 +45,39 @@ public class Island {
     public boolean isComplete() {return getCountOfBridgesLeftToBuild() == 0;} // whether the island has all its bridges built
     public boolean isDirectionBlockedByIntersectingBridge(CardinalDirection cardinalDirection) 
     {return directionBlockedForBridgeBuilding.get(cardinalDirection.equivalentValue());}
-    // the following methods do not check if a bridge be built *to* destination island, only *from* this island
-    public void howManyBridgesCanBeBuiltFromIsland() {} 
-    public void howManyBridgesCanBeBuiltFromIsland(CardinalDirection cardinalDirection) {}
+    public int howManyBridgesCanBeBuiltFromIsland(CardinalDirection cardinalDirection) {
+        if (isThereAnAdjacentIslandInThisDirection(cardinalDirection) && 
+        !isDirectionBlockedByIntersectingBridge(cardinalDirection) && !isComplete()) 
+        {return 2 - getCountOfBridgesBuiltFromIsland(cardinalDirection);} else {return 0;}
+    } // does not check if a bridge be built *to* destination island, only *from* this island
+    public int howManyBridgesCanBeBuiltFromIsland() {
+        return getSumOfItemsInIntegerArrayList(howManyBridgesCanBeBuiltFromEachDirectionOnIsland());
+    } // does not check if a bridge be built *to* destination island, only *from* this island
+    public ArrayList<Integer> howManyBridgesCanBeBuiltFromEachDirectionOnIsland() {
+        ArrayList<Integer> bridgesThatCanBeBuilt = new ArrayList<>(List.of(0, 0, 0, 0));
+        if (isComplete()) {return bridgesThatCanBeBuilt;} 
+        else {
+            for (CardinalDirection cardinalDirection : CardinalDirection.values()) {
+                if (isThereAnAdjacentIslandInThisDirection(cardinalDirection) && 
+                    !isDirectionBlockedByIntersectingBridge(cardinalDirection)) {
+                        bridgesThatCanBeBuilt.set(
+                            cardinalDirection.value(), (2 - getCountOfBridgesBuiltFromIsland(cardinalDirection))
+                        );
+                }
+            }
+            return bridgesThatCanBeBuilt;
+        }
+    } // does not check if a bridge be built *to* destination island, only *from* this island 
+
+    public CardinalDirection whatIsTheDirectionToAnotherIsland(Island islandB) {
+        int x_1 = getXOrdinate();
+        int y_1 = getYOrdinate();
+        int x_2 = islandB.getXOrdinate();
+        int y_2 = islandB.getYOrdinate();
+        if ((x_1 == x_2) && (y_1 > y_2)) {return CardinalDirection.NORTH;}
+        else if ((x_1 == x_2) && (y_1 < y_2)) {return CardinalDirection.SOUTH;}
+        else if ((x_1 > x_2) && (y_1 == y_2)) {return CardinalDirection.WEST;} 
+        else if ((x_1 < x_2) && (y_1 == y_2)) {return CardinalDirection.EAST;}
+        else {return null;} // either it's the same island, or they don't share a vertical or horizontal line
+    }
 }
