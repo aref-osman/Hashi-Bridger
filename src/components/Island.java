@@ -23,6 +23,12 @@ public class Island {
         ADJACENT_ISLAND_COORDINATES = adjacencyCoordinates;
     }
 
+    private int getSumOfItemsInIntegerArrayList(ArrayList<Integer> arrayList) {
+        int sum = 0;
+        for (Integer number : arrayList) {sum += number;}
+        return sum;
+    }
+
     public int getXOrdinate() {return X_ORDINATE;}
     public int getYOrdinate() {return Y_ORDINATE;}
     public int getTargetBridgeCount() {return TARGET_BRIDGE_COUNT;}
@@ -44,7 +50,7 @@ public class Island {
     public int getCountOfBridgesLeftToBuild() {return TARGET_BRIDGE_COUNT - getCountOfBridgesBuiltFromIsland();} // total bridges that remain to be built
     public boolean isComplete() {return getCountOfBridgesLeftToBuild() == 0;} // whether the island has all its bridges built
     public boolean isDirectionBlockedByIntersectingBridge(CardinalDirection cardinalDirection) 
-    {return directionBlockedForBridgeBuilding.get(cardinalDirection.equivalentValue());}
+    {return directionBlockedForBridgeBuilding.get(cardinalDirection.value());}
     public int howManyBridgesCanBeBuiltFromIsland(CardinalDirection cardinalDirection) {
         if (isThereAnAdjacentIslandInThisDirection(cardinalDirection) && 
         !isDirectionBlockedByIntersectingBridge(cardinalDirection) && !isComplete()) 
