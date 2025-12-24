@@ -16,4 +16,8 @@ public enum CardinalDirection {
     public int value() {
         return value;
     }
+
+    public int oppositeValue() {
+        return (value + 2) % 4;
+    }
 }
