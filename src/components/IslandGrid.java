@@ -19,7 +19,7 @@ public class IslandGrid {
     public IslandGrid () {
         readInputFile();
         parseIslandInformation();
-        calculateMapDimensionsImplicity();
+        calculateMapDimensionsImplicitly();
         createEmptyIslandGrid();
         addIslandNumbersToNumberGrid();
         addIslandsToIslandGrid();
@@ -45,7 +45,7 @@ public class IslandGrid {
             rawIslandList.add(separatedIslandParametersArrayList);
         }
     }
-    private void calculateMapDimensionsImplicity() {
+    private void calculateMapDimensionsImplicitly() {
         // determine map dimensions
         for (ArrayList<Integer> islandDetails : rawIslandList) {
             int islandRow = islandDetails.get(0);
