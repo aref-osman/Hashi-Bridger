@@ -5,15 +5,15 @@ import java.util.List;
 
 public class Island {
     
-    public final int X_ORDINATE;
-    public final int Y_ORDINATE;
-    public final int TARGET_BRIDGE_COUNT; // the number written on the island when solving visually
-    public final ArrayList<ArrayList<Integer>> ADJACENT_ISLAND_COORDINATES;
+    private final int X_ORDINATE;
+    private final int Y_ORDINATE;
+    private final int TARGET_BRIDGE_COUNT; // the number written on the island when solving visually
+    private final ArrayList<ArrayList<Integer>> ADJACENT_ISLAND_COORDINATES;
 
     // bridges built from the island towards the 4 directions, starting north, going clockwise
-    public ArrayList<Integer> builtBridges;
+    private ArrayList<Integer> builtBridges;
     // blockage is a result of a bridge intersecting a direction, perpendicular to it
-    public ArrayList<Boolean> directionBlockedForBridgeBuilding = new ArrayList<>(List.of(false, false, false, false));
+    private ArrayList<Boolean> directionBlockedForBridgeBuilding = new ArrayList<>(List.of(false, false, false, false));
 
     // constructor
     public Island(int x, int y, int island_num, ArrayList<ArrayList<Integer>> adjacencyCoordinates) {
