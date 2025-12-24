@@ -1,11 +1,10 @@
-import components.MapLoader;
+import components.IslandGrid;
 
 public class Main {
     public static void main(String[] args){
-        System.out.println("skibidi");
+        IslandGrid islandGrid = new IslandGrid();
+        islandGrid.solvePuzzle();
+        islandGrid.printSolution();
     }
-
-    // Step 1: read input file & parse it
-    MapLoader HashiBridger = new MapLoader();
-    // Step 2:
+    
 }
