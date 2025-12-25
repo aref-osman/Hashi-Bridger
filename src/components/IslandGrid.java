@@ -75,7 +75,45 @@ public class IslandGrid {
         }
     }
     private void addIslandsToIslandGrid() {}
+    private void updateBlockedDirectionInPathOfBridge(){} // TO DO
+    private void buildABridge(Island islandA, Island islandB, int weight) {
+        // find direction
+        CardinalDirection directionFromIslandAToIslandB = islandA.getDirectionToAnotherIsland(islandB);
+        CardinalDirection directionFromIslandBToIslandA = directionFromIslandAToIslandB.opposite();
+        // island 1 build bridge
+        islandA.buildABridgeFromTheIsland(weight, directionFromIslandAToIslandB);
+        // island 2 build bridge
+        islandB.buildABridgeFromTheIsland(weight, directionFromIslandBToIslandA);
+        // update blocked directions for paths now blocked by bridge for other islands
 
+    }
+    private void buildABridge(Island islandA, CardinalDirection direction, int weight) {
+        ArrayList<Integer> islandBCoordinates = getCoordinatesOfAdjacentIsland(islandA, direction);
+        Island islandB = getIsland(islandBCoordinates);
+        buildABridge(islandA, islandB, weight);
+    }
+    
+    private int getXOrdinateFromCoordinates(ArrayList<Integer> coordinates) {return (coordinates == null) ? null : coordinates.get(0);}
+    private int getYOrdinateFromCoordinates(ArrayList<Integer> coordinates) {return (coordinates == null) ? null : coordinates.get(1);}
+    private int getTotalTargetBridgeCount() {
+        int totalBridgesToBuild = 0; int islandNum;
+        for (ArrayList<Integer> islandDetails : rawIslandList) {islandNum = islandDetails.get(2); totalBridgesToBuild += islandNum;}
+        return totalBridgesToBuild;
+    }
+    private int getTotalBuiltBridgeCount() {
+        int bridgesBuilt = 0;
+        for (ArrayList<Island> row : islandGrid) {for (Island island : row) {bridgesBuilt += island.getCountOfBridgesBuiltFromIsland();}}
+        return bridgesBuilt;
+    }
+    private int getTotalRemaininingBridgesCount() {return getTotalTargetBridgeCount() - getTotalBuiltBridgeCount();}
+    private int howManyBridgesCanBeBuiltBetweenTwoIslands(Island islandA, Island islandB) {
+        CardinalDirection directionFromIslandAToIslandB = islandA.getDirectionToAnotherIsland(islandB);
+        CardinalDirection directionFromIslandBToIslandA = directionFromIslandAToIslandB.opposite();
+        return Integer.min(
+            islandA.getCountOfBridgesThatCanBeBuiltFromIslandInThisDirection(directionFromIslandAToIslandB), 
+            islandB.getCountOfBridgesThatCanBeBuiltFromIslandInThisDirection(directionFromIslandBToIslandA)
+        );
+    }
     private ArrayList<Integer> getCoordinatesOfAdjacentIsland(Island island, CardinalDirection direction) {
         int islandRow = island.getYOrdinate();
         int islandColumn = island.getXOrdinate();
@@ -104,7 +142,6 @@ public class IslandGrid {
                     }
                 }
             }
-
             case CardinalDirection.WEST -> {
                 // cycle through incrementally lower x-values for same y-values
                 for (int c = islandColumn - 1; c >= 0; c--) {
@@ -113,43 +150,19 @@ public class IslandGrid {
                     }
                 }
             }
-        
             default -> {
                 return null; // invalid direction given
             }
         }
         return null; // no adjacent island found in the specified direction
     }
-    private int getXOrdinateFromCoordinates(ArrayList<Integer> coordinates) {return (coordinates == null) ? null : coordinates.get(0);}
-    private int getYOrdinateFromCoordinates(ArrayList<Integer> coordinates) {return (coordinates == null) ? null : coordinates.get(1);}
-
-    private int getTotalTargetBridgeCount() {
-        int totalBridgesToBuild = 0; int islandNum;
-        for (ArrayList<Integer> islandDetails : rawIslandList) {islandNum = islandDetails.get(2); totalBridgesToBuild += islandNum;}
-        return totalBridgesToBuild;
-    }
-    private int getTotalBuiltBridgeCount() {
-        int bridgesBuilt = 0;
-        for (ArrayList<Island> row : islandGrid) {for (Island island : row) {bridgesBuilt += island.getCountOfBridgesBuiltFromIsland();}}
-        return bridgesBuilt;
-    }
-    private int getTotalRemaininingBridgesCount() {return getTotalTargetBridgeCount() - getTotalBuiltBridgeCount();}
-    private int howManyBridgesCanBeBuiltBetweenTwoIslands(Island islandA, Island islandB) {
-        CardinalDirection directionFromIslandAToIslandB = islandA.getDirectionToAnotherIsland(islandB);
-        CardinalDirection directionFromIslandBToIslandA = directionFromIslandAToIslandB.opposite();
-        return Integer.min(
-            islandA.getCountOfBridgesThatCanBeBuiltFromIslandInThisDirection(directionFromIslandAToIslandB), 
-            islandB.getCountOfBridgesThatCanBeBuiltFromIslandInThisDirection(directionFromIslandBToIslandA)
-        );
-    }
-    public void howManyBridgesCanBeBuiltBetweenThisAndAnotherIsland(Island islandB) {} // TO DO
-    
-    public void solvePuzzle() {}
-    public void printSolution() {}
     private Island getIsland(ArrayList<Integer> coordinates){
         int column = getXOrdinateFromCoordinates(coordinates); int row = getYOrdinateFromCoordinates(coordinates);
         return islandGrid.get(row).get(column);}
 
-    public ArrayList<ArrayList<Island>> getIslandGrid() {return islandGrid;}
     
+    public ArrayList<ArrayList<Island>> getIslandGrid() {return islandGrid;}
+
+    public void solvePuzzle() {} // TO DO
+    public void printSolution() {} // TO DO
 }
