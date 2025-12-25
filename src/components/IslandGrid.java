@@ -90,7 +90,7 @@ public class IslandGrid {
             }
             case CardinalDirection.EAST -> {
                 // cycle through incrementally bigger x-values for same y-values
-                for (int c = islandColumn; c < mapWidth; c++) {
+                for (int c = islandColumn + 1; c < mapWidth; c++) {
                     if (!(numberGrid.get(islandRow).get(c) == 0)) {
                         return new ArrayList<>(List.of(c, islandRow));
                     }
@@ -107,6 +107,11 @@ public class IslandGrid {
 
             case CardinalDirection.WEST -> {
                 // cycle through incrementally lower x-values for same y-values
+                for (int c = islandColumn - 1; c >= 0; c--) {
+                    if (!(numberGrid.get(islandRow).get(c) == 0)) {
+                        return new ArrayList<>(List.of(c, islandRow));
+                    }
+                }
             }
         
             default -> {
