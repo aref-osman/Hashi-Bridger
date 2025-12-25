@@ -65,7 +65,7 @@ public class Island {
     
     public ArrayList<ArrayList<Integer>> getAllAdjacentIslandCoordinates() {return ADJACENT_ISLAND_COORDINATES;}
 
-    public CardinalDirection whatIsTheDirectionToAnotherIsland(Island islandB) {
+    public CardinalDirection getDirectionToAnotherIsland(Island islandB) {
         int x_1 = getXOrdinate();
         int y_1 = getYOrdinate();
         int x_2 = islandB.getXOrdinate();
