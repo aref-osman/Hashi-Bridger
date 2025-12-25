@@ -120,14 +120,36 @@ public class IslandGrid {
         }
         return null; // no adjacent island found in the specified direction
     }
+    private int getXOrdinateFromCoordinates(ArrayList<Integer> coordinates) {return (coordinates == null) ? null : coordinates.get(0);}
+    private int getYOrdinateFromCoordinates(ArrayList<Integer> coordinates) {return (coordinates == null) ? null : coordinates.get(1);}
 
-    public ArrayList<ArrayList<Integer>> getIslandGrid() {
-        return islandGrid;
+    private int getTotalTargetBridgeCount() {
+        int totalBridgesToBuild = 0; int islandNum;
+        for (ArrayList<Integer> islandDetails : rawIslandList) {islandNum = islandDetails.get(2); totalBridgesToBuild += islandNum;}
+        return totalBridgesToBuild;
+    }
+    private int getTotalBuiltBridgeCount() {
+        int bridgesBuilt = 0;
+        for (ArrayList<Island> row : islandGrid) {for (Island island : row) {bridgesBuilt += island.getCountOfBridgesBuiltFromIsland();}}
+        return bridgesBuilt;
+    }
+    private int getTotalRemaininingBridgesCount() {return getTotalTargetBridgeCount() - getTotalBuiltBridgeCount();}
+    private int howManyBridgesCanBeBuiltBetweenTwoIslands(Island islandA, Island islandB) {
+        CardinalDirection directionFromIslandAToIslandB = islandA.getDirectionToAnotherIsland(islandB);
+        CardinalDirection directionFromIslandBToIslandA = directionFromIslandAToIslandB.opposite();
+        return Integer.min(
+            islandA.getCountOfBridgesThatCanBeBuiltFromIslandInThisDirection(directionFromIslandAToIslandB), 
+            islandB.getCountOfBridgesThatCanBeBuiltFromIslandInThisDirection(directionFromIslandBToIslandA)
+        );
     }
     public void howManyBridgesCanBeBuiltBetweenThisAndAnotherIsland(Island islandB) {} // TO DO
     
     public void solvePuzzle() {}
     public void printSolution() {}
+    private Island getIsland(ArrayList<Integer> coordinates){
+        int column = getXOrdinateFromCoordinates(coordinates); int row = getYOrdinateFromCoordinates(coordinates);
+        return islandGrid.get(row).get(column);}
 
+    public ArrayList<ArrayList<Island>> getIslandGrid() {return islandGrid;}
     
 }
