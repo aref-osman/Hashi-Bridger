@@ -115,8 +115,10 @@ public class IslandGrid {
             }
         
             default -> {
+                return null; // invalid direction given
             }
         }
+        return null; // no adjacent island found in the specified direction
     }
 
     public ArrayList<ArrayList<Integer>> getIslandGrid() {
