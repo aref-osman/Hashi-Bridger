@@ -76,4 +76,7 @@ public class Island {
         else if ((x_1 < x_2) && (y_1 == y_2)) {return CardinalDirection.EAST;}
         else {return null;} // either it's the same island, or they don't share a vertical or horizontal line
     }
+
+    public void buildABridgeFromTheIsland(int weight, CardinalDirection direction) {builtBridges.add(direction.value(), weight);}
+    public void blockDirectionForBridgeBuilding(CardinalDirection direction) {directionBlockedForBridgeBuilding.set(direction.value(), true);}
 }
