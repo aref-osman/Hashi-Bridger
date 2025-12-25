@@ -104,12 +104,12 @@ public class IslandGrid {
     private int getTotalTargetBridgeCount() {
         int totalBridgesToBuild = 0; int islandNum;
         for (ArrayList<Integer> islandDetails : rawIslandList) {islandNum = islandDetails.get(2); totalBridgesToBuild += islandNum;}
-        return totalBridgesToBuild;
+        totalBridgesToBuild /= 2; return totalBridgesToBuild;
     }
     private int getTotalBuiltBridgeCount() {
         int bridgesBuilt = 0;
         for (ArrayList<Island> row : islandGrid) {for (Island island : row) {bridgesBuilt += island.getCountOfBridgesBuiltFromIsland();}}
-        return bridgesBuilt;
+        bridgesBuilt /= 2; return bridgesBuilt;
     }
     private int getTotalRemaininingBridgesCount() {return getTotalTargetBridgeCount() - getTotalBuiltBridgeCount();}
     private int howManyBridgesCanBeBuiltBetweenTwoIslands(Island islandA, Island islandB) {
