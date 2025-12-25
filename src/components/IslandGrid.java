@@ -8,13 +8,14 @@ import java.util.List;
 
 public class IslandGrid {
 
-    private String mapFileText;
-    private String[] linesInMapFileText;
-    private ArrayList<ArrayList<Integer>> rawIslandList;
+    private String mapFileText; // raw file input
+    private String[] linesInMapFileText; // raw file input as lines
+    private ArrayList<ArrayList<Integer>> rawIslandList; // list of parsed island co-ordinates
     private ArrayList<ArrayList<Integer>> numberGrid; // use only during Island construction
-    private ArrayList<ArrayList<Island>> islandGrid;
+    
     private int mapWidth = 0;  // # of cols
     private int mapHeight = 0; // # of rows
+    private ArrayList<ArrayList<Island>> islandGrid;
 
     public IslandGrid () {
         readInputFile();
