@@ -16,4 +16,5 @@ public enum CardinalDirection {
     public Orientation getOrientation() {
         return switch (this) {case NORTH -> Orientation.VERTICAL; case EAST -> Orientation.HORIZONTAL;
             case SOUTH -> Orientation.VERTICAL; case WEST -> Orientation.HORIZONTAL;};}
+    public int polarityAdjuster(){return switch (this) {case NORTH -> -1; case EAST -> 1; case SOUTH -> 1; case WEST -> -1;};}
 }
