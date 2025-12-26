@@ -73,7 +73,6 @@ public class IslandGrid {
         }
     }
     private void addIslandsToIslandGrid() {}
-    private void updateBlockedDirectionInPathOfBridge(){} // TO DO
     private void buildABridge(Island islandA, Island islandB, int weight) {
         // find directions to build in
         CardinalDirection directionFromIslandAToIslandB = islandA.getDirectionToAnotherIsland(islandB);
@@ -83,6 +82,42 @@ public class IslandGrid {
         islandB.buildABridgeFromTheIsland(weight, directionFromIslandBToIslandA);
         // update blocked directions for paths now blocked by bridge for other islands
         updateBlockedDirectionInPathOfBridge();
+    private void updateBlockedDirectionInPathOfBridge(Orientation bridgeOrientation, int startPos, int endPos, int fixedPos){
+        boolean islandFound;
+        int r;
+        int c;
+        switch (bridgeOrientation) {
+            case VERTICAL -> {
+                for (r = startPos + 1; r < endPos - 1; r++) {
+                    // check east of vertical bridge
+                    c = fixedPos + 1;
+                    islandFound = false;
+                    while (c < mapWidth && !islandFound) {
+                        if (isThereAnIslandHere(c, r)) {islandFound = true; Island island = getIsland(c, r);
+                            island.blockDirectionForBridgeBuilding(CardinalDirection.WEST);} else {c++;}}}
+                    // check west of vertical bridge
+                    c = fixedPos - 1;
+                    islandFound = false;
+                    while (c >= 0 && !islandFound) {
+                        if (isThereAnIslandHere(c, r)) {islandFound = true; Island island = getIsland(c, r);
+                            island.blockDirectionForBridgeBuilding(CardinalDirection.EAST);} else {c--;}}}
+            case HORIZONTAL -> {
+                for (c = startPos + 1; c < endPos - 1; c++) {
+                    // check north of horizontal bridge
+                    r = fixedPos + 1;
+                    islandFound = false;
+                    while (r >= 0 && !islandFound) {
+                        if (isThereAnIslandHere(c, r)) {islandFound = true; Island island = getIsland(c, r);
+                            island.blockDirectionForBridgeBuilding(CardinalDirection.SOUTH);} else {r--;}}
+                    // check south of horizontal bridge
+                    r = fixedPos - 1;
+                    islandFound = false;
+                    while (c < mapHeight && !islandFound) {
+                        if (isThereAnIslandHere(c, r)) {islandFound = true; Island island = getIsland(c, r);
+                            island.blockDirectionForBridgeBuilding(CardinalDirection.NORTH);} else {r++;}}}
+                }
+            default -> throw new Error("Invalid bridge orientation provided!");
+        }
     }
     private void buildABridge(Island islandA, CardinalDirection directionFromIslandAToIslandB, int weight) {
         // locate island to build to
@@ -94,7 +129,11 @@ public class IslandGrid {
         islandA.buildABridgeFromTheIsland(weight, directionFromIslandAToIslandB);
         islandB.buildABridgeFromTheIsland(weight, directionFromIslandBToIslandA);
         // update blocked directions for paths now blocked by bridge for other islands
-        updateBlockedDirectionInPathOfBridge();
+        ArrayList<Integer> pos = getBridgeDimensions(islandA, islandB, bridgeOrientation);
+        int startPos = pos.get(0);
+        int endPos = pos.get(1);
+        int fixedPos = pos.get(2);
+        updateBlockedDirectionInPathOfBridge(bridgeOrientation, startPos, endPos, fixedPos);
     }
     
     private int getXOrdinateFromCoordinates(ArrayList<Integer> coordinates) {return (coordinates == null) ? null : coordinates.get(0);}
