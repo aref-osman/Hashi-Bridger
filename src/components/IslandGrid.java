@@ -118,6 +118,13 @@ public class IslandGrid {
             islandB.getCountOfBridgesThatCanBeBuiltFromIslandInThisDirection(directionFromIslandBToIslandA)
         );
     }
+    
+    private boolean isThereAnIslandHere(ArrayList<Integer> coordinates) {return getIsland(coordinates) != null;}
+    private boolean isThereAnIslandHere(int x, int y) {
+        ArrayList<Integer> coordinates = new ArrayList<>(List.of(x, y));
+        return getIsland(coordinates) != null;
+    }
+
     private ArrayList<Integer> getCoordinatesOfAdjacentIsland(Island island, CardinalDirection direction) {
         int islandRow = island.getYOrdinate();
         int islandColumn = island.getXOrdinate();
@@ -160,10 +167,35 @@ public class IslandGrid {
         }
         return null; // no adjacent island found in the specified direction
     }
+    private ArrayList<Integer> getBridgeDimensions(Island islandA, Island islandB, Orientation bridgeOrientation) {
+        switch (bridgeOrientation) {
+            case Orientation.VERTICAL -> {
+                int a = islandA.getYOrdinate();
+                int b = islandB.getYOrdinate();
+                int fixedPos = islandA.getXOrdinate();
+                int startPos = Integer.min(a, b);
+                int endPos = Integer.min(a, b);
+                if (islandB.getXOrdinate() != fixedPos) {throw new Error("Attempted to build a vertical bridge between non-adjacent islands!");} 
+                else {return new ArrayList<>(List.of(startPos, endPos, fixedPos));}}
+            case Orientation.HORIZONTAL -> {
+                int a = islandA.getXOrdinate();
+                int b = islandB.getXOrdinate();
+                int fixedPos = islandA.getYOrdinate();
+                int startPos = Integer.min(a, b);
+                int endPos = Integer.min(a, b);
+                if (islandB.getYOrdinate() != fixedPos) {throw new Error("Attempted to build a horizontal bridge between non-adjacent islands!");} 
+                else {return new ArrayList<>(List.of(startPos, endPos, fixedPos));}
+            }
+            default -> {throw new Error("Invalid bridge orientation provided!");}
+        }
+    }
+    
     private Island getIsland(ArrayList<Integer> coordinates){
         int column = getXOrdinateFromCoordinates(coordinates); int row = getYOrdinateFromCoordinates(coordinates);
         return islandGrid.get(row).get(column);}
 
+    private Island getIsland(int x, int y){return islandGrid.get(y).get(x);}
+    
     
     public ArrayList<ArrayList<Island>> getIslandGrid() {return islandGrid;}
 
