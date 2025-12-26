@@ -114,8 +114,9 @@ public class IslandGrid {
         // locate island to build to
         ArrayList<Integer> islandBCoordinates = getCoordinatesOfAdjacentIsland(islandA, directionFromIslandAToIslandB);
         Island islandB = getIsland(islandBCoordinates);
-        // set direction to build in for other island
+        // set direction & orientation to build in for other island
         CardinalDirection directionFromIslandBToIslandA = directionFromIslandAToIslandB.opposite();
+        Orientation bridgeOrientation = directionFromIslandAToIslandB.getOrientation();
         // update built bridges lists
         islandA.buildABridgeFromTheIsland(weight, directionFromIslandAToIslandB);
         islandB.buildABridgeFromTheIsland(weight, directionFromIslandBToIslandA);
@@ -223,7 +224,6 @@ public class IslandGrid {
     private Island getIsland(ArrayList<Integer> coordinates){
         int column = getXOrdinateFromCoordinates(coordinates); int row = getYOrdinateFromCoordinates(coordinates);
         return islandGrid.get(row).get(column);}
-
     private Island getIsland(int x, int y){return islandGrid.get(y).get(x);}
     
     
