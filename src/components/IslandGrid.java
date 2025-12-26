@@ -73,15 +73,6 @@ public class IslandGrid {
         }
     }
     private void addIslandsToIslandGrid() {}
-    private void buildABridge(Island islandA, Island islandB, int weight) {
-        // find directions to build in
-        CardinalDirection directionFromIslandAToIslandB = islandA.getDirectionToAnotherIsland(islandB);
-        CardinalDirection directionFromIslandBToIslandA = directionFromIslandAToIslandB.opposite();
-        // update built bridges lists
-        islandA.buildABridgeFromTheIsland(weight, directionFromIslandAToIslandB);
-        islandB.buildABridgeFromTheIsland(weight, directionFromIslandBToIslandA);
-        // update blocked directions for paths now blocked by bridge for other islands
-        updateBlockedDirectionInPathOfBridge();
     private void updateBlockedDirectionInPathOfBridge(Orientation bridgeOrientation, int startPos, int endPos, int fixedPos){
         boolean islandFound;
         int r;
