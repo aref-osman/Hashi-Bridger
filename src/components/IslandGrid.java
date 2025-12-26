@@ -69,9 +69,7 @@ public class IslandGrid {
             int row = islandDetails.get(0);
             int column = islandDetails.get(1);
             int islandNum = islandDetails.get(2);
-            ArrayList<Integer> r = numberGrid.get(row);
-            r.set(column, islandNum);
-            numberGrid.set(row, r);
+            numberGrid.get(row).set(column, islandNum);
         }
     }
     private void addIslandsToIslandGrid() {}
@@ -86,14 +84,14 @@ public class IslandGrid {
         // update blocked directions for paths now blocked by bridge for other islands
         updateBlockedDirectionInPathOfBridge();
     }
-    private void buildABridge(Island islandA, CardinalDirection direction, int weight) {
+    private void buildABridge(Island islandA, CardinalDirection directionFromIslandAToIslandB, int weight) {
         // locate island to build to
-        ArrayList<Integer> islandBCoordinates = getCoordinatesOfAdjacentIsland(islandA, direction);
+        ArrayList<Integer> islandBCoordinates = getCoordinatesOfAdjacentIsland(islandA, directionFromIslandAToIslandB);
         Island islandB = getIsland(islandBCoordinates);
         // set direction to build in for other island
-        CardinalDirection directionFromIslandBToIslandA = direction.opposite();
+        CardinalDirection directionFromIslandBToIslandA = directionFromIslandAToIslandB.opposite();
         // update built bridges lists
-        islandA.buildABridgeFromTheIsland(weight, direction);
+        islandA.buildABridgeFromTheIsland(weight, directionFromIslandAToIslandB);
         islandB.buildABridgeFromTheIsland(weight, directionFromIslandBToIslandA);
         // update blocked directions for paths now blocked by bridge for other islands
         updateBlockedDirectionInPathOfBridge();
