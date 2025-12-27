@@ -73,6 +73,7 @@ public class IslandGrid {
         }
     }
     private void addIslandsToIslandGrid() {}
+        for (ArrayList<Integer> islandDetails : rawIslandList) {
     private void updateBlockedDirectionInPathOfBridge(Orientation bridgeOrientation, int startPos, int endPos, int fixedPos){
         boolean islandFound;
         int r;
