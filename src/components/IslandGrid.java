@@ -198,6 +198,48 @@ public class IslandGrid {
         }
         return null; // no adjacent island found in the specified direction
     }
+    private ArrayList<Integer> getCoordinatesOfAdjacentIsland(ArrayList<Integer> islandCoordinates, CardinalDirection direction) {
+        int islandRow = getYOrdinateFromCoordinates(islandCoordinates);
+        int islandColumn = getXOrdinateFromCoordinates(islandCoordinates);
+        switch (direction) {
+            case CardinalDirection.NORTH -> {
+                // cycle through incrementally lower y-values for same x-values
+                for (int r = islandRow - 1; r >= 0; r--) {
+                    if (!(numberGrid.get(r).get(islandColumn) == 0)) {
+                        return new ArrayList<>(List.of(islandColumn, r));
+                    }
+                }
+            }
+            case CardinalDirection.EAST -> {
+                // cycle through incrementally bigger x-values for same y-values
+                for (int c = islandColumn + 1; c < mapWidth; c++) {
+                    if (!(numberGrid.get(islandRow).get(c) == 0)) {
+                        return new ArrayList<>(List.of(c, islandRow));
+                    }
+                }
+            }
+            case CardinalDirection.SOUTH -> {
+                // cycle through incrementally bigger y-values for same x-values
+                for (int r = islandRow + 1; r < mapHeight; r++) {
+                    if (!(numberGrid.get(r).get(islandColumn) == 0)) {
+                        return new ArrayList<>(List.of(islandColumn, r));
+                    }
+                }
+            }
+            case CardinalDirection.WEST -> {
+                // cycle through incrementally lower x-values for same y-values
+                for (int c = islandColumn - 1; c >= 0; c--) {
+                    if (!(numberGrid.get(islandRow).get(c) == 0)) {
+                        return new ArrayList<>(List.of(c, islandRow));
+                    }
+                }
+            }
+            default -> {
+                return null; // invalid direction given
+            }
+        }
+        return null; // no adjacent island found in the specified direction
+    }
     private ArrayList<Integer> getBridgeDimensions(Island islandA, Island islandB, Orientation bridgeOrientation) {
         switch (bridgeOrientation) {
             case Orientation.VERTICAL -> {
